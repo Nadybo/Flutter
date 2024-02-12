@@ -93,7 +93,7 @@ class ThemeHelper {
 class TextThemes {
   static TextTheme textTheme(ColorScheme colorScheme) => TextTheme(
         bodyLarge: TextStyle(
-          color: appTheme.gray800,
+          color: appTheme.black900,
           fontSize: 16.fSize,
           fontFamily: 'Gilroy',
           fontWeight: FontWeight.w400,

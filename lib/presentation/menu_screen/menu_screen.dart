@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myhome/core/app_export.dart';
+import 'package:myhome/presentation/map_screen.dart';
+import 'package:myhome/presentation/services_screen.dart';
 import 'package:myhome/widgets/app_bar/appbar_leading_image.dart';
 import 'package:myhome/widgets/app_bar/appbar_title.dart';
 import 'package:myhome/widgets/app_bar/appbar_trailing_image.dart';
@@ -23,8 +25,7 @@ class MenuScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+      return Scaffold(
         resizeToAvoidBottomInset: false,
         body: SizedBox(
           height: 805.v,
@@ -84,15 +85,15 @@ class MenuScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 
   /// Section Widget
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
-    return CustomAppBar(
-      leadingWidth: 52.h,
-      leading: AppbarLeadingImage(
+ PreferredSizeWidget _buildAppBar(BuildContext context) {
+  return CustomAppBar(
+    leadingWidth: 52.h,
+    leading: InkWell(
+      child: AppbarLeadingImage(
         imagePath: ImageConstant.imgMegaphone,
         margin: EdgeInsets.only(
           left: 25.h,
@@ -100,22 +101,26 @@ class MenuScreen extends StatelessWidget {
           bottom: 25.v,
         ),
       ),
-      centerTitle: true,
-      title: AppbarTitle(
-        text: "Новости",
-      ),
-      actions: [
-        AppbarTrailingImage(
-          imagePath: ImageConstant.imgClock,
-          // margin: EdgeInsets.fromLTRB(25.h, 25.v, 25.h, 25.v),
-          margin: EdgeInsets.only( right: 25.h,
+    ),
+    centerTitle: true,
+    title: AppbarTitle(
+      text: "Новости",
+    ),
+    actions: [
+      AppbarTrailingImage(
+        imagePath: ImageConstant.imgClock,
+        margin: EdgeInsets.only(
+          right: 25.h,
           top: 25.v,
-          bottom: 25.v,),
+          bottom: 25.v,
         ),
-      ],
-      styleType: Style.bgFill,
-    );
-  }
+      ),
+    ],
+    
+    styleType: Style.bgFill,
+  );
+}
+
 
   /// Section Widget
 Widget navigationButtons(BuildContext context) {
@@ -388,5 +393,6 @@ Widget buildHoverText({required String text, required VoidCallback onTap}) {
       ),
     );
   }
+
 }
 
