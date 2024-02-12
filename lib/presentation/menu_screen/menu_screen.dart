@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myhome/core/app_export.dart';
-import 'package:myhome/presentation/map_screen.dart';
-import 'package:myhome/presentation/services_screen.dart';
-import 'package:myhome/widgets/app_bar/appbar_leading_image.dart';
-import 'package:myhome/widgets/app_bar/appbar_title.dart';
-import 'package:myhome/widgets/app_bar/appbar_trailing_image.dart';
-import 'package:myhome/widgets/app_bar/custom_app_bar.dart';
+import 'package:myhome/widgets/appbarDrawer.dart';
 import 'package:myhome/widgets/custom_search_view.dart';
 
 
@@ -19,108 +14,85 @@ class MenuScreen extends StatelessWidget {
 
   TextEditingController searchController = TextEditingController();
   
-
   bool isSelectedSwitch = false;
 
 
   @override
   Widget build(BuildContext context) {
-      return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: SizedBox(
-          height: 805.v,
-          width: double.maxFinite,
-          child: Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    _buildAppBar(context),
-                    SizedBox(height: 15.v),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: SizedBox(
-                          height: 909.v,
-                          width: double.maxFinite,
-                          child: Stack(
-                            alignment: Alignment.topCenter,
-                            children: [
-                              Opacity(
-                                opacity: 0.5,
-                                child: Align(
+  return Scaffold(
+    resizeToAvoidBottomInset: false,
+    appBar: AppBar(
+      backgroundColor:  appTheme.blueGray800,// Изменяем цвет AppBar
+      iconTheme: IconThemeData(color: Colors.white),
+    ),
+    drawer: MyDrawer(), // Вызываем боковую панель из файла drawer.dart
+    body: Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(ImageConstant.imgVector), // Путь к вашему изображению
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: SizedBox(
+        height: 805.v,
+        width: double.maxFinite,
+        child: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: 15.v),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: SizedBox(
+                        height: 909.v,
+                        width: double.maxFinite,
+                        child: Stack(
+                          alignment: Alignment.topCenter,
+                          children: [
+                            Opacity(
+                              opacity: 0.5,
+                              child: Align(
+                                alignment: Alignment.topCenter,
+                                child: CustomSearchView(
+                                  width: 363.h,
+                                  controller: searchController,
+                                  hintText: "Поиск",
                                   alignment: Alignment.topCenter,
-                                  child: CustomSearchView(
-                                    width: 363.h,
-                                    controller: searchController,
-                                    hintText: "Поиск",
-                                    alignment: Alignment.topCenter,
-                                  ),
                                 ),
                               ),
-                              navigationButtons(context),
-                              Align(
-                                alignment: Alignment.bottomCenter,
-                                child: SizedBox(
-                                  height: 809.v,
-                                  width: 364.h,
-                                  child: Stack(
-                                    alignment: Alignment.bottomCenter,
-                                    children: [
-                                      newsContainer(context),
-                                    ],
-                                  ),
+                            ),
+                            navigationButtons(context),
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: SizedBox(
+                                height: 809.v,
+                                width: 364.h,
+                                child: Stack(
+                                  alignment: Alignment.bottomCenter,
+                                  children: [
+                                    newsContainer(context),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-      );
-  }
-
-  /// Section Widget
- PreferredSizeWidget _buildAppBar(BuildContext context) {
-  return CustomAppBar(
-    leadingWidth: 52.h,
-    leading: InkWell(
-      child: AppbarLeadingImage(
-        imagePath: ImageConstant.imgMegaphone,
-        margin: EdgeInsets.only(
-          left: 25.h,
-          top: 25.v,
-          bottom: 25.v,
+            ),
+          ],
         ),
       ),
     ),
-    centerTitle: true,
-    title: AppbarTitle(
-      text: "Новости",
-    ),
-    actions: [
-      AppbarTrailingImage(
-        imagePath: ImageConstant.imgClock,
-        margin: EdgeInsets.only(
-          right: 25.h,
-          top: 25.v,
-          bottom: 25.v,
-        ),
-      ),
-    ],
-    
-    styleType: Style.bgFill,
   );
 }
-
 
   /// Section Widget
 Widget navigationButtons(BuildContext context) {
@@ -392,7 +364,5 @@ Widget buildHoverText({required String text, required VoidCallback onTap}) {
         ),
       ),
     );
-  }
-
+  } 
 }
-

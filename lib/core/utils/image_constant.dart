@@ -49,5 +49,7 @@ class ImageConstant {
 
   static String imgThumbsUp = '$imagePath/img_thumbs_up.svg';
 
-  static String imageNotFound = 'assets/images/image_not_found.png';
+  static String imageNotFound = '$imagePath/image_not_found.png';
+
+  static String imageMenu = '$imagePath/menuBg.png';
 }

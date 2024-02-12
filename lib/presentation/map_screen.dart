@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myhome/core/app_export.dart';
-import 'package:myhome/widgets/app_bar/appbar_leading_image.dart';
-import 'package:myhome/widgets/app_bar/appbar_title.dart';
-import 'package:myhome/widgets/app_bar/custom_app_bar.dart';
+import 'package:myhome/widgets/appbarDrawer.dart';
 import 'package:myhome/widgets/custom_elevated_button.dart';
 import 'package:myhome/widgets/custom_icon_button.dart';
 
@@ -18,7 +16,11 @@ class MapScreen extends StatelessWidget {
       child: Scaffold(
         extendBody: true,
         extendBodyBehindAppBar: true,
-        appBar: _buildAppBar(context),
+         appBar: AppBar(
+       backgroundColor:  appTheme.blueGray800,// Изменяем цвет AppBar
+      iconTheme: IconThemeData(color: Colors.white),// Изменяем цвет AppBar
+        ),
+        drawer: MyDrawer(),
         body: Container(
           width: SizeUtils.width,
           height: SizeUtils.height,
@@ -84,29 +86,6 @@ class MapScreen extends StatelessWidget {
     );
   }
 
-  /// Section Widget
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
-    return CustomAppBar(
-      leadingWidth: 39.h,
-      leading: AppbarLeadingImage(
-        imagePath: ImageConstant.imgMaskGroup29x29,
-        margin: EdgeInsets.only(
-          left: 18.h,
-          top: 46.v,
-          bottom: 11.v,
-        ),
-      ),
-      centerTitle: true,
-      title: AppbarTitle(
-        text: "Карты",
-        margin: EdgeInsets.only(
-          top: 37.v,
-          bottom: 13.v,
-        ),
-      ),
-      styleType: Style.bgFill,
-    );
-  }
 
   /// Section Widget
   Widget _buildCorpusaButton(BuildContext context) {
