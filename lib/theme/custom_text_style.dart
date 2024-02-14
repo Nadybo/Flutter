@@ -12,7 +12,7 @@ class CustomTextStyles {
       );
   // Headline text style
   static get headlineLargeBlack => theme.textTheme.headlineLarge!.copyWith(
-        fontWeight: FontWeight.w900,
+        fontWeight: FontWeight.w500,
       );
   static get headlineSmallBold => theme.textTheme.headlineSmall!.copyWith(
         fontWeight: FontWeight.w700,
@@ -65,7 +65,7 @@ class CustomTextStyles {
   static get titleSmallVerdanaWhiteA700 =>
       theme.textTheme.titleSmall!.verdana.copyWith(
         color: appTheme.whiteA700,
-        fontWeight: FontWeight.w700,
+        fontWeight: FontWeight.w500,
       );
   static get titleSmallWhiteA700 => theme.textTheme.titleSmall!.copyWith(
         color: appTheme.whiteA700,

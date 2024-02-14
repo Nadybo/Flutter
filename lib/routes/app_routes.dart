@@ -52,6 +52,6 @@ class AppRoutes {
     theServicetwoScreen: (context) => TheServicetwoScreen(),
     theServicethreeScreen: (context) => TheServicethreeScreen(),
     appNavigationScreen: (context) => AppNavigationScreen(),
-    testScreen :(context) => MyApp()
+    // testScreen :(context) => NewsList()
   };
 }

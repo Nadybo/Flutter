@@ -27,8 +27,8 @@ class LoginScreen extends StatelessWidget {
         extendBodyBehindAppBar: true,
         resizeToAvoidBottomInset: false,
         body: Container(
-          width: SizeUtils.width,
-          height: SizeUtils.height,
+          width: 390.h,
+          height: 844.v,
           decoration: BoxDecoration(
             border: Border.all(
               color: appTheme.black900,
@@ -59,7 +59,7 @@ class LoginScreen extends StatelessWidget {
                     alignment: Alignment.center,
                     child: Container(
                       padding: EdgeInsets.symmetric(
-                        horizontal: 78.h,
+                        horizontal: 70.h,
                         vertical: 50.v,
                       ),
                       decoration: AppDecoration.fillGray.copyWith(
@@ -69,29 +69,21 @@ class LoginScreen extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          SizedBox(height: 430.v),
-                          InkWell(
-                            onTap: () {
-                              // При нажатии открываем новое окно
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => RegisterScreen()),
-                              );
-                            },
-                            child: Text(
-                              "Нет аккаунта? Зарегистрируйтесь",
-                              style: CustomTextStyles.bodySmallWhiteA700.copyWith(
-                                decoration: TextDecoration.none,
-                              ),
-                            ),
+                          SizedBox(height: 444.v),
+                          TextButton(onPressed: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => RegisterScreen()));},
+                              child: Text("Нет аккаунта? Зарегистрируйтесь",style: CustomTextStyles.bodySmallWhiteA700.copyWith(
+                                decoration: TextDecoration.none,),
+                              )
                           ),
                           SizedBox(height: 220.v),
                           Opacity(
                             opacity: 0.5,
-                            child: Text(
-                              "Не можете вспомнить логин или пароль? ",
-                              softWrap: false,
-                              style: theme.textTheme.bodySmall,
+                            child: TextButton(
+                              onPressed: () {print("zabil parol");},
+                              child: Text("Не можете вспомнить логин или пароль? ", style: theme.textTheme.bodySmall,softWrap: false),
                             ),
                           ),
                         ],

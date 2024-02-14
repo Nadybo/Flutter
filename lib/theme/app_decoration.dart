@@ -151,6 +151,13 @@ class BorderRadiusStyle {
   static BorderRadius get roundedBorder50 => BorderRadius.circular(
         50.h,
       );
+  static BorderRadius get roundedBorderForProfile => BorderRadius.only(
+    topLeft: Radius.circular(14.0),
+    topRight: Radius.circular(14.0),
+    bottomLeft: Radius.circular(0),
+    bottomRight: Radius.circular(0),
+  );
+
 }
 
 // Comment/Uncomment the below code based on your Flutter SDK version.
