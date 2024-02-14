@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myhome/core/app_export.dart';
+import 'package:myhome/presentation/profile_screen.dart';
 import 'package:myhome/widgets/appbarDrawer.dart';
 import 'package:myhome/widgets/custom_search_view.dart';
-
-
 
 // ignore: must_be_immutable
 class MenuScreen extends StatelessWidget {
@@ -15,14 +14,43 @@ class MenuScreen extends StatelessWidget {
   TextEditingController searchController = TextEditingController();
   
   bool isSelectedSwitch = false;
+  int page = 0;
+ 
 
-
+  
   @override
   Widget build(BuildContext context) {
   return Scaffold(
     resizeToAvoidBottomInset: false,
     appBar: AppBar(
-      backgroundColor:  appTheme.blueGray800,// Изменяем цвет AppBar
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Главная',
+            style: CustomTextStyles.titleSmallWhiteA700,
+          ),
+        ],
+      ),
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: 16.0),
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfileScreen()),
+              );
+            },
+            child: Image.asset(
+              ImageConstant.imgClock,
+              height: 30,
+              width: 30,
+            ),
+          ),
+        )
+      ],
+      backgroundColor: appTheme.blueGray800,
       iconTheme: IconThemeData(color: Colors.white),
     ),
     drawer: MyDrawer(), // Вызываем боковую панель из файла drawer.dart
@@ -33,65 +61,57 @@ class MenuScreen extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-      child: SizedBox(
-        height: 805.v,
-        width: double.maxFinite,
-        child: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(height: 15.v),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: SizedBox(
-                        height: 909.v,
-                        width: double.maxFinite,
-                        child: Stack(
+      child: Column(
+        children: [
+          SizedBox(height: 15.v),
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: SizedBox(
+                height: 909.v,
+                width: double.maxFinite,
+                child: Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    Opacity(
+                      opacity: 0.5,
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: CustomSearchView(
+                          width: 363.h,
+                          controller: searchController,
+                          hintText: "Поиск",
                           alignment: Alignment.topCenter,
+                        ),
+                      ),
+                    ),
+                    navigationButtons(context),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: SizedBox(
+                        height: 809.v,
+                        width: 364.h,
+                        child: Stack(
+                          alignment: Alignment.bottomCenter,
                           children: [
-                            Opacity(
-                              opacity: 0.5,
-                              child: Align(
-                                alignment: Alignment.topCenter,
-                                child: CustomSearchView(
-                                  width: 363.h,
-                                  controller: searchController,
-                                  hintText: "Поиск",
-                                  alignment: Alignment.topCenter,
-                                ),
-                              ),
-                            ),
-                            navigationButtons(context),
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: SizedBox(
-                                height: 809.v,
-                                width: 364.h,
-                                child: Stack(
-                                  alignment: Alignment.bottomCenter,
-                                  children: [
-                                    newsContainer(context),
-                                  ],
-                                ),
-                              ),
-                            ),
+                            newsContainer(context),
+                            
                           ],
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-    ),
+    ),       
   );
+      
+    
+
 }
 
   /// Section Widget
@@ -117,7 +137,7 @@ Widget navigationButtons(BuildContext context) {
             buildHoverText(
               text: "Новости",
               onTap: () {
-                var i = 1;
+                
                 print("Нажатие на 'Новости'");
               },
             ),
@@ -125,17 +145,22 @@ Widget navigationButtons(BuildContext context) {
             buildHoverText(
               text: "Общежития",
               onTap: () {
-                var i = 2;
+                page == 2;
+                currentPage == true;
                 print("Нажатие на 'Общежития'");
               },
+               
             ),
             SizedBox(width: textMargin), // Добавленный SizedBox для между текстами
             buildHoverText(
               text: "Политех Медиа",
               onTap: () {
-                var i = 3;
+                page == 3;
+                currentPage == true;
                 print("Нажатие на 'Политех Медиа'");
+                
               },
+              
             ),
             SizedBox(width: screenMargin), // Добавленный SizedBox для margin в конце экрана
           ],
@@ -156,14 +181,13 @@ Widget buildHoverText({required String text, required VoidCallback onTap}) {
           text,
           style: CustomTextStyles.titleMediumGray800_1,
         ),
+        
       ),
+      
     ),
+    
   );
 }
-
-
-
-
 
   /// Section Widget
   Widget newsContainer(BuildContext context) {
@@ -261,8 +285,6 @@ Widget buildHoverText({required String text, required VoidCallback onTap}) {
     );
   }
 
-
-  /// Common widget
   Widget _buildSixtyOne(
     BuildContext context, {
     required String newsTitle,
@@ -366,3 +388,4 @@ Widget buildHoverText({required String text, required VoidCallback onTap}) {
     );
   } 
 }
+

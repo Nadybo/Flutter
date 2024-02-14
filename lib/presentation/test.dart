@@ -5,7 +5,7 @@ void main() => runApp(const MyApp());
 class MyApp extends StatelessWidget {
   const MyApp({key});
 
-  static const appTitle = 'Drawer Demo';
+  static const appTitle = '';
 
   @override
   Widget build(BuildContext context) {

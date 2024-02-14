@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/scheduler.dart';
 import 'core/app_export.dart';
 
 var globalMessengerKey = GlobalKey<ScaffoldMessengerState>();
@@ -24,7 +23,7 @@ class MyApp extends StatelessWidget {
           theme: theme,
           title: 'myhome',
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.applicationsthreeScreen,
+          initialRoute: AppRoutes.menuScreen,
           routes: AppRoutes.routes,
         );
       },

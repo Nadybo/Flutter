@@ -60,10 +60,10 @@ class RegisterScreen extends StatelessWidget {
                       child: Container(
                         padding: EdgeInsets.symmetric(
                           horizontal: 115.h,
-                          vertical: 276.v,
+                          vertical: 290.v,
                         ),
                         decoration: AppDecoration.fillGray.copyWith(
-                          borderRadius: BorderRadiusStyle.roundedBorder20,
+                          
                         ),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -110,11 +110,12 @@ class RegisterScreen extends StatelessWidget {
                             _buildWebUrlEditText(context),
                             SizedBox(height: 20.v),
                             _buildPasswordEditText(context),
+                            SizedBox(height: 20.v,),
+                             _buildYearEditText(context),
                           ],
                         ),
                       ),
                     ),
-                    _buildYearEditText(context),
                     CustomImageView(
                       imagePath: ImageConstant.imgMaskGroup,
                       height: 126.v,

@@ -22,9 +22,28 @@ class ApplicationsthreeScreen extends StatelessWidget {
          Scaffold(
             resizeToAvoidBottomInset: false,
             appBar: AppBar(
-            backgroundColor:  appTheme.blueGray800,// Изменяем цвет AppBar
-      iconTheme: IconThemeData(color: Colors.white), // Изменяем цвет AppBar
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Заявки',
+                  style: CustomTextStyles.titleSmallWhiteA700,
+                ),
+              ],
             ),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 16.0),
+                child: Image.asset(
+                  ImageConstant.imgClock,
+                  height: 30,
+                  width: 30,
+                ),
+              ),
+            ],
+            backgroundColor: appTheme.blueGray800,
+            iconTheme: IconThemeData(color: Colors.white),
+          ),
             drawer: MyDrawer(),
             body: SizedBox(
           height: 805.v,
