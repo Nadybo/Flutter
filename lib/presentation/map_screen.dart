@@ -1,189 +1,78 @@
 import 'package:flutter/material.dart';
-import 'package:myhome/core/app_export.dart';
-import 'package:myhome/widgets/appbarDrawer.dart';
-import 'package:myhome/widgets/custom_elevated_button.dart';
-import 'package:myhome/widgets/custom_icon_button.dart';
+import 'package:myhome/examples/bicycle_page.dart';
+import 'package:myhome/examples/circle_map_object_page.dart';
+import 'package:myhome/examples/clusterized_placemark_collection_page.dart';
+import 'package:myhome/examples/map_object_collection_page.dart';
+import 'package:myhome/examples/placemark_map_object_page.dart';
+import 'package:myhome/examples/polygon_map_object_page.dart';
+import 'package:myhome/examples/polyline_map_object_page.dart';
+import 'package:myhome/examples/reverse_search_page.dart';
+import 'package:myhome/examples/search_page.dart';
+import 'package:myhome/examples/suggest_page.dart';
+import 'package:myhome/examples/user_layer_page.dart';
+import 'package:myhome/widgets/map_page.dart';
+import 'package:yandex_mapkit/yandex_mapkit.dart';
+import 'package:myhome/examples/map_controls_page.dart';
+
+import '../examples/driving_page.dart';
+
+const List<MapPage> _allPages = <MapPage>[
+  MapControlsPage(),
+  ClusterizedPlacemarkCollectionPage(),
+  MapObjectCollectionPage(),
+  PlacemarkMapObjectPage(),
+  PolylineMapObjectPage(),
+  PolygonMapObjectPage(),
+  CircleMapObjectPage(),
+  UserLayerPage(),
+  SuggestionsPage(),
+  SearchPage(),
+  ReverseSearchPage(),
+  BicyclePage(),
+  DrivingPage(),
+];
 
 class MapScreen extends StatelessWidget {
-  const MapScreen({Key? key})
-      : super(
-          key: key,
-        );
+  const MapScreen({ Key? key}) : super(key: key);
+
+  void _pushPage(BuildContext context, MapPage page) {
+    Navigator.push(
+        context,
+        MaterialPageRoute<void>(builder: (_) =>
+            Scaffold(
+                appBar: AppBar(title: Text(page.title)),
+                body: Container(
+                    padding: const EdgeInsets.all(8),
+                    child: page
+                )
+            )
+        )
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        extendBody: true,
-        extendBodyBehindAppBar: true,
-         appBar: AppBar(
-       backgroundColor:  appTheme.blueGray800,// Изменяем цвет AppBar
-      iconTheme: IconThemeData(color: Colors.white),// Изменяем цвет AppBar
-        ),
-        drawer: MyDrawer(),
-        body: Container(
-          width: SizeUtils.width,
-          height: SizeUtils.height,
-          decoration: BoxDecoration(
-            color: theme.colorScheme.onPrimaryContainer,
-            border: Border.all(
-              color: appTheme.black900,
-              width: 10.h,
-              strokeAlign: strokeAlignOutside,
-            ),
-            image: DecorationImage(
-              image: AssetImage(
-                ImageConstant.imgMap,
+    return Scaffold(
+        appBar: AppBar(title: const Text('YandexMap examples')),
+        body: Column(
+            children: <Widget>[
+              Expanded(
+                  child: Container(
+                      padding: const EdgeInsets.all(8),
+                      child: const YandexMap()
+                  )
               ),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: SizedBox(
-            width: double.maxFinite,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                SizedBox(height: 20.v),
-                Container(
-                  height: 40.adaptSize,
-                  width: 40.adaptSize,
-                  margin: EdgeInsets.only(right: 20.h),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      CustomImageView(
-                        imagePath: ImageConstant.imgMaskGroup25x25,
-                        height: 25.adaptSize,
-                        width: 25.adaptSize,
-                        alignment: Alignment.topLeft,
-                        margin: EdgeInsets.only(
-                          left: 3.h,
-                          top: 3.v,
-                        ),
-                      ),
-                      CustomIconButton(
-                        height: 40.adaptSize,
-                        width: 40.adaptSize,
-                        alignment: Alignment.center,
-                        child: CustomImageView(),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 20.v),
-                _buildCorpusaButton(context),
-                SizedBox(height: 15.v),
-                _buildDormitoriesButton(context),
-                SizedBox(height: 15.v),
-                _buildEventsButton(context),
-                Spacer(),
-                _buildFortyFive(context),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-
-  /// Section Widget
-  Widget _buildCorpusaButton(BuildContext context) {
-    return CustomElevatedButton(
-      height: 37.v,
-      width: 131.h,
-      text: "Корпуса",
-      margin: EdgeInsets.only(right: 20.h),
-      buttonStyle: CustomButtonStyles.fillGray,
-    );
-  }
-
-  /// Section Widget
-  Widget _buildDormitoriesButton(BuildContext context) {
-    return CustomElevatedButton(
-      height: 37.v,
-      width: 131.h,
-      text: "Общежития",
-      margin: EdgeInsets.only(right: 20.h),
-      buttonStyle: CustomButtonStyles.fillGray,
-    );
-  }
-
-  /// Section Widget
-  Widget _buildEventsButton(BuildContext context) {
-    return CustomElevatedButton(
-      height: 37.v,
-      width: 131.h,
-      text: "Мероприятия",
-      margin: EdgeInsets.only(right: 20.h),
-      buttonStyle: CustomButtonStyles.fillGray,
-    );
-  }
-
-  /// Section Widget
-  Widget _buildMoreButton(BuildContext context) {
-    return CustomElevatedButton(
-      text: "Подробнее",
-      margin: EdgeInsets.only(
-        left: 44.h,
-        right: 43.h,
-      ),
-    );
-  }
-
-  /// Section Widget
-  Widget _buildFortyFive(BuildContext context) {
-    return Container(
-      width: double.maxFinite,
-      padding: EdgeInsets.symmetric(
-        horizontal: 25.h,
-        vertical: 15.v,
-      ),
-      decoration: AppDecoration.fillGray.copyWith(
-        borderRadius: BorderRadiusStyle.roundedBorder25,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(
-            height: 62.v,
-            width: 333.h,
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                CustomImageView(
-                  imagePath: ImageConstant.imgMaskGroup23x23,
-                  height: 23.adaptSize,
-                  width: 23.adaptSize,
-                  alignment: Alignment.topRight,
-                  margin: EdgeInsets.only(right: 3.h),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Общежитие №1",
-                        style: CustomTextStyles.titleLargeWhiteA700,
-                      ),
-                      SizedBox(height: 8.v),
-                      Text(
-                        "Малая Семёновская улица, 12, Москва, 107023",
-                        style: CustomTextStyles.titleSmallWhiteA700Black,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 30.v),
-          _buildMoreButton(context),
-          SizedBox(height: 34.v),
-        ],
-      ),
+              Expanded(
+                  child: ListView.builder(
+                    itemCount: _allPages.length,
+                    itemBuilder: (_, int index) => ListTile(
+                      title: Text(_allPages[index].title),
+                      onTap: () => _pushPage(context, _allPages[index]),
+                    ),
+                  )
+              )
+            ]
+        )
     );
   }
 }

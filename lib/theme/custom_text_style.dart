@@ -42,6 +42,10 @@ class CustomTextStyles {
         color: appTheme.gray800,
         fontWeight: FontWeight.w700,
       );
+  static get titleMediumWhite800 => theme.textTheme.titleMedium!.copyWith(
+    color: appTheme.whiteA700,
+    fontWeight: FontWeight.w700,
+  );
   static get titleMediumGray800Medium => theme.textTheme.titleMedium!.copyWith(
         color: appTheme.gray800,
         fontWeight: FontWeight.w500,

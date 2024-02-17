@@ -4,13 +4,15 @@ import 'package:myhome/presentation/register_screen.dart';
 import 'package:myhome/presentation/menu_screen/menu_screen.dart';
 import 'package:myhome/presentation/profile_screen.dart';
 import 'package:myhome/presentation/map_screen.dart';
+import 'package:myhome/presentation/test.dart';
 import 'package:myhome/presentation/toolbars_screen.dart';
 import 'package:myhome/presentation/applicationsthree_screen.dart';
 import 'package:myhome/presentation/services_screen.dart';
 import 'package:myhome/presentation/the_servicetwo_screen.dart';
 import 'package:myhome/presentation/the_servicethree_screen.dart';
 import 'package:myhome/presentation/app_navigation_screen.dart';
-import 'package:myhome/presentation/test.dart';
+import '../presentation/splashScreen.dart';
+
 
 class AppRoutes {
   static const String loginScreen = '/login_screen';
@@ -40,6 +42,8 @@ class AppRoutes {
 
   static const String testScreen = '/test';
 
+  static const String splashScreen = '/splashScreen';
+
   static Map<String, WidgetBuilder> routes = {
     loginScreen: (context) => LoginScreen(),
     registerScreen: (context) => RegisterScreen(),
@@ -52,6 +56,7 @@ class AppRoutes {
     theServicetwoScreen: (context) => TheServicetwoScreen(),
     theServicethreeScreen: (context) => TheServicethreeScreen(),
     appNavigationScreen: (context) => AppNavigationScreen(),
-    // testScreen :(context) => NewsList()
+    splashScreen: (context) => SplashScreen(),
+    testScreen :(context) => MyApp(),
   };
 }

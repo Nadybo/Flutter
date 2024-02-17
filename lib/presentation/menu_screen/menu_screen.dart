@@ -22,12 +22,16 @@ class _MenuScreenState extends State<MenuScreen> {
 
   bool isSelectedSwitch = false;
 
-  int page = 0;
-  bool currentpage = false;
+  int currentPage = 0;
+
+  Widget currentWidget = NewsListScreen();
+
 
   @override
   Widget build(BuildContext context) {
-  return Scaffold(
+  return MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: Scaffold(
     resizeToAvoidBottomInset: false,
     appBar: AppBar(
       title: Row(
@@ -68,36 +72,21 @@ class _MenuScreenState extends State<MenuScreen> {
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: SizedBox(
-                height: 909.v,
+                height: 900.v,
                 width: double.maxFinite,
-                child: Stack(
-                  alignment: Alignment.topCenter,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center, // Выравнивание по центру
                   children: [
-                    Align(
+                    CustomSearchView(
+                      width: 363.h,
+                      controller: searchController,
+                      hintText: "Поиск",
                       alignment: Alignment.topCenter,
-                      child: CustomSearchView(
-                        width: 363.h,
-                        controller: searchController,
-                        hintText: "Поиск",
-                        alignment: Alignment.topCenter,
-                      ),
                     ),
                     navigationButtons(context),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: SizedBox(
-                        height: 809.v,
-                        width: 363.h,
-                        child: Stack(
-                          alignment: Alignment.bottomCenter,
-                          children: [
-                            NewsCard(
-                              imageUrl: ImageConstant.imgClock,
-                              title: 'Заголовок новости 1',
-                            ),
-                          ],
-                        ),
-                      ),
+                    Expanded(
+                        // child: NewsListScreen(),
+                        child: currentWidget,
                     ),
                   ],
                 ),
@@ -107,21 +96,23 @@ class _MenuScreenState extends State<MenuScreen> {
         ],
       ),
     ),
+    ),
   );
 }
 
   /// Section Widget
+
   Widget navigationButtons(BuildContext context) {
     const double textMargin = 40.0;
-    const double screenMargin = 20.0;
+    const double screenMargin = 5.0;
 
     return Align(
       alignment: Alignment.topCenter,
       child: Container(
         margin: EdgeInsets.only(
           left: 13.h,
-          top: 50.v,
-          bottom: 824.v,
+          top: 10.v,
+          bottom: 10.v,
         ),
         padding: EdgeInsets.symmetric(vertical: 6.v),
         child: SingleChildScrollView(
@@ -129,48 +120,82 @@ class _MenuScreenState extends State<MenuScreen> {
           child: Row(
             children: [
               OutlinedButton(
-                  onPressed:(){
-                    setState(() {
-                      page == 1;
-                      currentpage == true;
-                    });
-                    print("Нажатие на 'Новости'");
-                    },
-                  child: Text("Новости", style: CustomTextStyles.titleMediumGray800, textAlign: TextAlign.center, softWrap: false),
-                style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    // fixedSize: const Size(he35),
-                    padding:EdgeInsets.all(15.0),
-                    side: const BorderSide(color: Colors.black, width: 1)
-                ),
-              ),
-              SizedBox(width: textMargin), // Добавленный SizedBox для между текстами
-              OutlinedButton(
-                  onPressed:(){ print("Нажатие на 'Общежития'");},
-                  child: Text("Общежития", style: CustomTextStyles.titleMediumGray800, textAlign: TextAlign.center, softWrap: false),
-                style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    // fixedSize: const Size(he35),
-                    padding:EdgeInsets.all(15.0),
-                    side: const BorderSide(color: Colors.black, width: 1)
-                ),
-              ),
-
-              SizedBox(width: textMargin), // Добавленный SizedBox для между текстами
-              OutlinedButton(
-                onPressed:(){ print("Нажатие на 'Политех Медиа'");},
-                child: Text("Политех Медиа", style: CustomTextStyles.titleMediumGray800, textAlign: TextAlign.center, softWrap: false),
+                onPressed: () {
+                  setState(() {
+                    currentWidget = NewsListScreen();
+                    currentPage = 0; // Устанавливаем текущую страницу как 0 (для раздела "Новости")
+                  });
+                  print("Нажатие на 'Новости'");
+                },
+                child: Text("Новости", style: currentPage == 0 ? CustomTextStyles.titleMediumWhite800 : CustomTextStyles.titleMediumGray800, textAlign: TextAlign.center, softWrap: false),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Colors.white,
-                    // fixedSize: const Size(he35),
-                    padding:EdgeInsets.all(15.0),
-                    side: const BorderSide(color: Colors.black, width: 1)
+                  padding: EdgeInsets.all(15.0),
+                  side: BorderSide(color: currentPage == 0 ? Colors.white : appTheme.blueGray800, width: 1),
                 ),
               ),
-              SizedBox(width: screenMargin), // Добавленный SizedBox для margin в конце экрана
+              SizedBox(width: textMargin),
+              OutlinedButton(
+                onPressed: () {
+                  setState(() {
+                    currentWidget = DormitoriesWidget();
+                    currentPage = 1; // Устанавливаем текущую страницу как 1 (для другого раздела)
+                  });
+                  print("Нажатие на 'Общежития'");
+                },
+                child: Text("Общежития", style: currentPage == 1 ? CustomTextStyles.titleMediumWhite800 : CustomTextStyles.titleMediumGray800, textAlign: TextAlign.center, softWrap: false),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  padding: EdgeInsets.all(15.0),
+                  side: BorderSide(color: currentPage == 1 ? Colors.white : appTheme.blueGray800, width: 1),
+                ),
+              ),
+              SizedBox(width: textMargin),
+              OutlinedButton(
+                onPressed: () {
+                  setState(() {
+                    currentWidget = MediaWidget();
+                    currentPage = 2; // Устанавливаем текущую страницу как 2 (для другого раздела)
+                  });
+                  print("Нажатие на 'Политех Медиа'");
+                },
+                child: Text("Политех Медиа", style: currentPage == 2 ? CustomTextStyles.titleMediumWhite800 : CustomTextStyles.titleMediumGray800, textAlign: TextAlign.center, softWrap: false),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  padding: EdgeInsets.all(15.0),
+                  side: BorderSide(color: currentPage == 2 ? Colors.white : appTheme.blueGray800, width: 1),
+                  // backgroundColor: currentPage == 2? Colors.white  : appTheme.blueGray800,
+                ),
+              ),
+              SizedBox(width: screenMargin),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+
+class DormitoriesWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        'Dormitories Widget',
+        style: TextStyle(fontSize: 20),
+      ),
+    );
+  }
+}
+
+class MediaWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        'Media Widget',
+        style: TextStyle(fontSize: 20),
       ),
     );
   }

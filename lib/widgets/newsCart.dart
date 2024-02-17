@@ -1,102 +1,134 @@
 import 'package:flutter/material.dart';
-import 'package:myhome/core/app_export.dart';
+import '../theme/custom_text_style.dart';
+import '../theme/theme_helper.dart';
 
-class NewsCard extends StatelessWidget {
-  final String imageUrl;
-  final String title;
 
-  const NewsCard({
-    required this.imageUrl,
-    required this.title,
-  });
+class NewsListScreen extends StatelessWidget {
+  final List<News> newsList = [
+    News(
+      title: 'Breaking News 1',
+      imageUrl: 'assets/images/img_rectangle_20_279x349.png',
+      content: 'Content of Breaking News 1',
+    ),
+    News(
+      title: 'Breaking News 2',
+      imageUrl: 'assets/images/img_rectangle_20.png',
+      content: 'Content of Breaking News 2',
+    ),
+    // Add more news items here
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          PageRouteBuilder(
-            fullscreenDialog: true,
-            transitionDuration: Duration(milliseconds: 100),
-            pageBuilder: (context, animation, secondaryAnimation) {
-              return FadeTransition(
-                opacity: animation,
-                child: NewsDetail(imageUrl: imageUrl, title: title),
+    return ListView.builder(
+        itemCount: newsList.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NewsDetailScreen(news: newsList[index]),
+                ),
               );
             },
-          ),
-        );
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Card(
-            elevation: 5,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 150,
-                  width: 364,
-                  child: Image.network(
-                    imageUrl,
-                    fit: BoxFit.cover,
-                  ),
+            child: Card(
+              margin: EdgeInsets.only(
+                left:13,
+                right: 13,
+                bottom: 13,
+              ),
+              child: Container(
+                padding: EdgeInsets.all(5.0),
+                height: 250, // увеличиваем высоту карточки
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  // mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 430, // устанавливаем ширину изображения
+                      height: 200, // устанавливаем высоту изображения
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        image: DecorationImage(
+                          image: NetworkImage(newsList[index].imageUrl),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      // child: Text(
+                      //   newsList[index].title,
+                      //   style: TextStyle(fontSize: 18),
+                      //   // textAlign: TextAlign.end,
+                      // ),
+                    ),
+                    SizedBox(height: 10,),
+                    Text(
+                      newsList[index].title,
+                      style: TextStyle(fontSize: 18),
+
+                    ),
+                  ],
                 ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    title,
-                    style: CustomTextStyles.titleSmallBlack900,
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-          Expanded(child: Container()), // Пустой Expanded для заполнения пространства
-        ],
-      ),
-    );
+          );
+        },
+      );
   }
 }
 
-class NewsDetail extends StatelessWidget {
-  final String imageUrl;
+class News {
   final String title;
+  final String imageUrl;
+  final String content;
 
-  const NewsDetail({
-    required this.imageUrl,
+  News({
     required this.title,
+    required this.imageUrl,
+    required this.content,
   });
+}
+
+class NewsDetailScreen extends StatelessWidget {
+  final News news;
+
+  NewsDetailScreen({required this.news});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          title,
-          style: CustomTextStyles.titleSmallWhiteA700,
-        ),
+        title: Text('News Detail',style: CustomTextStyles.titleSmallWhiteA700,),
         backgroundColor: appTheme.blueGray800,
         iconTheme: IconThemeData(color: Colors.white),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.network(imageUrl),
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text(
-              'Описание новости...',
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              news.title,
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
               ),
             ),
-          ),
-        ],
+            SizedBox(height: 10),
+            Image.network(
+              news.imageUrl,
+              height: 200,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
+            SizedBox(height: 10),
+            Text(
+              news.content,
+              style: TextStyle(fontSize: 16),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
-
