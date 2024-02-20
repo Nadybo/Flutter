@@ -52,4 +52,8 @@ class ImageConstant {
   static String imageNotFound = '$imagePath/image_not_found.png';
 
   static String imageMenu = '$imagePath/menuBg.png';
+
+  static String imgIntro = '$imagePath/introBg.png';
+
+
 }

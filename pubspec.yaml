@@ -11,21 +11,25 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   shared_preferences: ^2.0.12
 
+
   intl: ^0.18.0
   yandex_mapkit: ^3.4.0
   permission_handler: ^11.3.0
   cupertino_icons: ^1.0.6
+
 dev_dependencies:
   flutter_test: 
     sdk: flutter
-
 
 flutter: 
   uses-material-design: true
   assets: 
     - assets/
     - assets/images/
-  fonts: 
+    - assets/icons/student.svg
+    - assets/icons/ghost.svg
+    - assets/icons/worker.svg
+  fonts:
     - family: Gilroy
       fonts: 
         - asset: assets/fonts/GilroyRegular.ttf

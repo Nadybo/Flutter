@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:myhome/presentation/introWindow.dart';
 import 'package:myhome/presentation/login_screen.dart';
 
 import '../theme/theme_helper.dart';
@@ -17,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(Duration(seconds: 3), () {
       Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (_) => LoginScreen()));
+          .pushReplacement(MaterialPageRoute(builder: (_) => IntroWindow()));
     });
   }
 

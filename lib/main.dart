@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
           theme: theme,
           title: 'myhome',
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.menuScreen,
+          initialRoute: AppRoutes.splashScreen,
           routes: AppRoutes.routes,
         );
       },

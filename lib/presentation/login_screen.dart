@@ -6,12 +6,17 @@ import 'package:myhome/widgets/custom_elevated_button.dart';
 import 'package:myhome/widgets/custom_text_form_field.dart';
 
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key})
       : super(
           key: key,
         );
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   TextEditingController weburlController = TextEditingController();
 
   TextEditingController passwordController = TextEditingController();
@@ -21,7 +26,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-     
+
       child: Scaffold(
         extendBody: true,
         extendBodyBehindAppBar: true,

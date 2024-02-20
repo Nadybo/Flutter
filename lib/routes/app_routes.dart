@@ -1,5 +1,11 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
+import 'package:myhome/presentation/RoleSelect_screen.dart';
+import 'package:myhome/presentation/introWindow.dart';
+import 'package:myhome/presentation/login2.dart';
 import 'package:myhome/presentation/login_screen.dart';
+import 'package:myhome/presentation/register2.dart';
 import 'package:myhome/presentation/register_screen.dart';
 import 'package:myhome/presentation/menu_screen/menu_screen.dart';
 import 'package:myhome/presentation/profile_screen.dart';
@@ -44,6 +50,14 @@ class AppRoutes {
 
   static const String splashScreen = '/splashScreen';
 
+  static const String introScreen = '/introScreen';
+
+  static const String login2Screen = '/Login2';
+
+  static const String register2Screen = '/Register2';
+
+  static const String roleSelectScreen = '/SelectionItems';
+
   static Map<String, WidgetBuilder> routes = {
     loginScreen: (context) => LoginScreen(),
     registerScreen: (context) => RegisterScreen(),
@@ -58,5 +72,9 @@ class AppRoutes {
     appNavigationScreen: (context) => AppNavigationScreen(),
     splashScreen: (context) => SplashScreen(),
     testScreen :(context) => MyApp(),
+    introScreen :(context) => IntroWindow(),
+    login2Screen :(context) => Login2(),
+    register2Screen :(context) => Register2(),
+    roleSelectScreen : (context) => SelectionItems(),
   };
 }

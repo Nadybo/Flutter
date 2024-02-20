@@ -1,10 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <application
         android:label="myhome"
-        android:name="${applicationName}"
+        android:name="${MainApplication}"
         android:icon="@mipmap/ic_launcher">
+
         <activity
-            android:name=".MainActivity"
+            android:name="MainApplication"
             android:exported="true"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"

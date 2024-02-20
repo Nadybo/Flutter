@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myhome/core/app_export.dart';
+import 'package:myhome/presentation/login2.dart';
 import 'package:myhome/presentation/login_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -159,7 +160,7 @@ class ProfileScreen extends StatelessWidget {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  LoginScreen()),
+                                                  Login2()),
                                         );
                                       },
                                       child: Row(

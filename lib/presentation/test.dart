@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MyApp());
@@ -8,126 +9,67 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: NewsListScreen(),
-    );
-  }
-}
-
-class NewsListScreen extends StatelessWidget {
-  final List<News> newsList = [
-    News(
-      title: 'Breaking News 1',
-      imageUrl: 'https://via.placeholder.com/150',
-      content: 'Content of Breaking News 1',
-    ),
-    News(
-      title: 'Breaking News 2',
-      imageUrl: 'https://via.placeholder.com/150',
-      content: 'Content of Breaking News 2',
-    ),
-    // Add more news items here
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView.builder(
-        itemCount: newsList.length,
-
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => NewsDetailScreen(news: newsList[index]),
-                ),
-              );
-            },
-            child: Card(
-              child: Container(
-                // padding: EdgeInsets.all(5.0),
-                height: 200, // увеличиваем высоту карточки
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 430, // устанавливаем ширину изображения
-                      height: 150, // устанавливаем высоту изображения
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        image: DecorationImage(
-                          image: NetworkImage(newsList[index].imageUrl),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10,),
-                    Text(
-                      newsList[index].title,
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
+      title: 'Показ окна только при первом посещении',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
+      home: HomePage(),
     );
   }
 }
 
-class News {
-  final String title;
-  final String imageUrl;
-  final String content;
+class HomePage extends StatelessWidget {
+  // Функция для проверки, посещал ли пользователь приложение ранее
+  Future<bool> isFirstVisit() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('visited') ?? true;
+  }
 
-  News({
-    required this.title,
-    required this.imageUrl,
-    required this.content,
-  });
-}
-
-class NewsDetailScreen extends StatelessWidget {
-  final News news;
-
-  NewsDetailScreen({required this.news});
+  // Функция для установки метки о посещении
+  Future<void> setVisited() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('visited', false);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('News Detail'),
+        title: Text('Главная страница'),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              news.title,
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 10),
-            Image.network(
-              news.imageUrl,
-              height: 200,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-            SizedBox(height: 10),
-            Text(
-              news.content,
-              style: TextStyle(fontSize: 16),
-            ),
-          ],
-        ),
+      body: FutureBuilder(
+        future: isFirstVisit(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (snapshot.data == true) {
+            // Если это первое посещение, показываем окно
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text('Добро пожаловать!'),
+                  content: Text('Это окно будет показано только при вашем первом посещении.'),
+                  actions: [
+                    // FlatButton(
+                    //   onPressed: () {
+                    //     Navigator.of(context).pop();
+                    //   },
+                    //   child: Text('OK'),
+                    // ),
+                  ],
+                ),
+              );
+              setVisited(); // Устанавливаем метку о посещении
+            });
+          }
+          return Center(
+            child: Text('Вы уже посещали это приложение ранее.'),
+          );
+        },
       ),
     );
   }
